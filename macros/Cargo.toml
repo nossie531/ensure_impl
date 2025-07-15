@@ -1,6 +1,6 @@
 [package]
 name = "ensure_impl_macro"
-version = "0.2.0"
+version = "0.2.1"
 description = "Macros for `ensure_impl`."
 authors.workspace = true
 edition.workspace = true
