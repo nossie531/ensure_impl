@@ -1,0 +1,22 @@
+[workspace]
+members = ["macros"]
+
+[workspace.package]
+authors = ["Nossie531"]
+edition = "2024"
+repository = "https://github.com/nossie531/ensure_impl"
+license = "MIT OR Apache-2.0"
+
+[package]
+name = "ensure_impl"
+version = "0.1.0"
+description = "Trait implementation assertion.."
+keywords = ["blanket-implementation"]
+categories = ["no-std", "rust-patterns"]
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+
+[dependencies]
+ensure_impl_macro = { version = "=0.1.0", path = "macros" }
