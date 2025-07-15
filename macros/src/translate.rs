@@ -33,28 +33,28 @@ fn parse_attr(input: TokenStream) -> Result<(), TokenStream> {
 
 /// Parse item.
 fn parse_impl_item(input: TokenStream) -> Result<syn::ItemImpl, TokenStream> {
-    let impl_item = match syn::parse2::<syn::Item>(input.clone()) {
+    let item_impl = match syn::parse2::<syn::Item>(input.clone()) {
         Ok(syn::Item::Impl(x)) => x,
         Err(_) => return Err(input),
         Ok(_) => return Err(util::err_tokens(&input, msg::IMPL_ONLY)),
     };
 
-    if impl_item.unsafety.is_some() {
-        let err_tokens = impl_item.unsafety.unwrap();
+    if item_impl.unsafety.is_some() {
+        let err_tokens = item_impl.unsafety.unwrap();
         return Err(util::err_tokens(&err_tokens, msg::UNSAFE_INCLUDED));
     }
 
-    if impl_item.trait_.is_none() {
-        let err_tokens = impl_item.impl_token;
+    if item_impl.trait_.is_none() {
+        let err_tokens = item_impl.impl_token;
         return Err(util::err_tokens(&err_tokens, msg::IMPL_FOR_ONLY));
     }
 
-    if impl_item.trait_.as_ref().is_some_and(|x| x.0.is_some()) {
-        let err_tokens = impl_item.trait_.unwrap().0.unwrap();
+    if item_impl.trait_.as_ref().is_some_and(|x| x.0.is_some()) {
+        let err_tokens = item_impl.trait_.unwrap().0.unwrap();
         return Err(util::err_tokens(&err_tokens, msg::NEG_IMPL_DETECTED));
     }
 
-    Ok(impl_item)
+    Ok(item_impl)
 }
 
 /// Creates ensure statement.
