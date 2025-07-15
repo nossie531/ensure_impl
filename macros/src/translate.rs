@@ -2,7 +2,7 @@
 
 use crate::util;
 use proc_macro2::TokenStream;
-use quote::quote;
+use quote::{ToTokens, quote};
 use syn::{self, Error};
 
 /// Translate `ensure_impl` attribute and its item.
@@ -54,6 +54,12 @@ fn parse_impl_item(input: TokenStream) -> Result<syn::ItemImpl, TokenStream> {
         return Err(util::err_tokens(&err_tokens, msg::NEG_IMPL_DETECTED));
     }
 
+    if !item_impl.items.is_empty() {
+        let body_tokens = item_impl.items.iter().map(ToTokens::to_token_stream);
+        let err_tokens = TokenStream::from_iter(body_tokens);
+        return Err(util::err_tokens(&err_tokens, msg::BODY_INCLUDED));
+    }
+
     Ok(item_impl)
 }
 
@@ -88,4 +94,5 @@ mod msg {
     pub const IMPL_FOR_ONLY: &str = "`ensure_impl` can only be used on `impl` with `for`";
     pub const UNSAFE_INCLUDED: &str = "`ensure_impl` does not support `unsafe`";
     pub const NEG_IMPL_DETECTED: &str = "`ensure_impl` does not support negative impl";
+    pub const BODY_INCLUDED: &str = "`impl` of `ensure_impl` must be empty";
 }

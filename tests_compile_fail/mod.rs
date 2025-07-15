@@ -64,3 +64,19 @@ fn _target_must_be_safe_impl() {
 fn _target_must_be_positive_impl() {
     // nop.
 }
+
+/// Target `impl` must be empty.
+///
+/// ```compile_fail
+/// use crate::prelude::*;
+/// trait MyTrait<T> {}
+/// struct MyType();
+/// impl<T> MyTrait<T> for MyType {}
+/// #[ensure_impl]
+/// impl<T> MyTrait<T> for MyType {
+///     fn method() {}
+/// }
+/// ```
+fn _target_impl_must_be_empty() {
+    // nop.
+}
