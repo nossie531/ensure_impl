@@ -39,7 +39,6 @@ mod util;
 /// impl Bound2 for MyType {}
 /// impl Bound3 for MyType {}
 /// ```
-#[allow(missing_docs)]
 #[proc_macro_attribute]
 pub fn ensure_impl(attr: pm::TokenStream, item: pm::TokenStream) -> pm::TokenStream {
     let attr = TokenStream::from(attr);
